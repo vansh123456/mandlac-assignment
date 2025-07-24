@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -17,9 +11,9 @@ model Camera {
   id        String     @id @default(uuid())
   name      String
   location  String
-  incidents Incident[]
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
+  incidents Incident[]
 
   @@map("cameras")
 }
@@ -27,14 +21,14 @@ model Camera {
 model Incident {
   id           String   @id @default(uuid())
   cameraId     String
-  camera       Camera   @relation(fields: [cameraId], references: [id], onDelete: Cascade)
-  type         String   // "Unauthorised Access", "Gun Threat", "Face Recognised", etc.
+  type         String
   tsStart      DateTime
   tsEnd        DateTime
   thumbnailUrl String
   resolved     Boolean  @default(false)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+  camera       Camera   @relation(fields: [cameraId], references: [id], onDelete: Cascade)
 
   @@map("incidents")
 }
